@@ -49,7 +49,7 @@ module.exports = {
         cartNumBg: "#e80013",
         primary: "#0f0f0f",
         ligthbggray: "rgba(256,256,256,0.4)",
-        lighttextGray: "#121212",
+        lighttextGray: "#808080",
         card: "rgba(256,256,256,0.8)",
         cartBg: "#282a2c",
         cartItem: "#2e3033",
