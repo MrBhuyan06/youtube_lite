@@ -11,14 +11,16 @@ import {
   AiOutlineUser,
   AiOutlineSearch,
 } from "react-icons/ai";
+import { changeTheme } from "../redux/theme.js";
 
 import { MdKeyboardVoice, MdDarkMode, MdOutlineDarkMode } from "react-icons/md";
 const Header = () => {
+  const theme = useSelector((store) => store.themes.apptheme);
+  console.log(theme);
   const dispatch = useDispatch();
-  const [theme, setTheme] = useState(false);
 
   function themeHandler() {
-    setTheme(!theme);
+    dispatch(changeTheme());
   }
   //   if (user) {
   //     // const {
