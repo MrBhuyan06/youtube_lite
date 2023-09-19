@@ -12,15 +12,19 @@ import {
   AiOutlineSearch,
 } from "react-icons/ai";
 import { changeTheme } from "../redux/theme.js";
+import { toggleMenu } from "../redux/appNavigation.js";
 
 import { MdKeyboardVoice, MdDarkMode, MdOutlineDarkMode } from "react-icons/md";
 const Header = () => {
   const theme = useSelector((store) => store.themes.apptheme);
-  console.log(theme);
+
   const dispatch = useDispatch();
 
   function themeHandler() {
     dispatch(changeTheme());
+  }
+  function handleToggleMenu() {
+    dispatch(toggleMenu());
   }
   //   if (user) {
   //     // const {
@@ -43,7 +47,10 @@ const Header = () => {
     >
       <div className="container flex items-center justify-between mx-auto">
         <div className="flex items-center gap-2 ">
-          <AiOutlineMenu className="text-2xl cursor-pointer" />
+          <AiOutlineMenu
+            className="text-2xl cursor-pointer"
+            onClick={handleToggleMenu}
+          />
           <AiFillYoutube className="text-red-500 text-5xl" />
         </div>
         <div className="flex  w-full  md:w-3/5  items-center justify-center">

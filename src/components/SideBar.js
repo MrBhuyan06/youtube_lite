@@ -13,6 +13,11 @@ import {
 
 const SideBar = () => {
   const theme = useSelector((store) => store.themes.apptheme);
+  const isOpen = useSelector((store) => store.menu.isOpen);
+  if (!isOpen) {
+    return;
+  }
+
   return (
     <div className="w-190 flex flex-col ">
       <ul>
