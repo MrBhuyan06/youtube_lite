@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchUser } from "../c/helper.js";
-const userInfo = fetchUser();
+// import { fetchUser } from "../config/helper.js";
+// const userInfo = fetchUser();
 
 const authslice = createSlice({
   name: "auth",
