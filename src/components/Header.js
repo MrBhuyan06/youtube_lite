@@ -41,7 +41,7 @@ const Header = () => {
 
   return (
     <header
-      className={` flex items-center  shadow-lg h-20 ${
+      className={` fixed top-0 w-full z-10 flex items-center  shadow-lg h-20 ${
         theme ? "text-black bg-white " : "text-red-600 bg-primary"
       }`}
     >

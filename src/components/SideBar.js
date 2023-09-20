@@ -19,7 +19,7 @@ const SideBar = () => {
   }
 
   return (
-    <div className="w-190 flex flex-col ">
+    <div className="w-190 border-r-2 border-red-600  sticky top-20 h-[430px]      ">
       <ul>
         <li
           className={`rounded-sm p-4 ${
