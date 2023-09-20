@@ -7,11 +7,11 @@ const BodyContainer = () => {
   const theme = useSelector((store) => store.themes.apptheme);
   return (
     <div
-      className={`flex  border-t-2   ${
+      className={`flex mt-20     border-red-400 h-min-90  ${
         theme ? "bg-white text-black" : " bg-primary text-white"
-      } `}
+      }   `}
     >
-      <SideBar />
+      <SideBar className="sticky top-40" />
       <Outlet />
     </div>
   );

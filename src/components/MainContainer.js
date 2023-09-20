@@ -5,7 +5,8 @@ import SideBar from "./SideBar.js";
 
 const MainContainer = () => {
   return (
-    <div className="w-full border-2">
+    <div className="w-full p-4   ">
+      <CategoriesList />
       <VideoContainer />
     </div>
   );
