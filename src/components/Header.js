@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import store from "../redux/store.js";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
@@ -13,10 +13,14 @@ import {
 } from "react-icons/ai";
 import { changeTheme } from "../redux/theme.js";
 import { toggleMenu } from "../redux/appNavigation.js";
+import { SEARCH_SUGGESTION_API } from "../config/constant.js";
 
 import { MdKeyboardVoice, MdDarkMode, MdOutlineDarkMode } from "react-icons/md";
 const Header = () => {
   const theme = useSelector((store) => store.themes.apptheme);
+  const [searchText, setSearchText] = useState("");
+  const [suggestion, setSuggestion] = useState([]);
+  const [showSuggestion, setShowSuggestion] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -26,18 +30,23 @@ const Header = () => {
   function handleToggleMenu() {
     dispatch(toggleMenu());
   }
-  //   if (user) {
-  //     // const {
-  //     //   user: { refreshToken, providerData },
-  //     // } = await signInWithPopup(firebaseAuth, provider);
-  //     dispatch(login({ name: "abhishekssss", age: "knkn" }));
-  //     // localStorage.setItem("user", JSON.stringify(providerData[0]));
-  //     // console.log(typeof providerData[0]);
-  //   }
-  //   // } else {
-  //   //   setIsMenu(!isMenu);
-  //   // }
-  // };
+
+  useEffect(() => {
+    //getSearcData
+    const timer = setTimeout(() => {
+      getSearchData();
+    }, 1000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [searchText]);
+
+  async function getSearchData() {
+    console.log("Api Call");
+    const stream = await fetch(SEARCH_SUGGESTION_API + searchText);
+    const data = await stream.json();
+    setSuggestion(data[1]);
+  }
 
   return (
     <header
@@ -53,15 +62,41 @@ const Header = () => {
           />
           <AiFillYoutube className="text-red-500 text-5xl" />
         </div>
-        <div className="flex  w-full  md:w-3/5  items-center justify-center">
-          <input
-            type="text"
-            className={` p-2 w-full  md:w-1/2 text-white  outline-none focus:border-2 border-red-600 rounded-l-full 
+        <div className="flex  w-full    items-center justify-center relative">
+          <div className="flex w-full md:w-3/5 items-center justify-center relative">
+            <input
+              type="text"
+              className={` p-2 w-full  text-white  outline-none focus:border-2 border-red-600 rounded-l-full 
               ${theme ? "bg-slate-300" : "bg-ligthbggray"}`}
-          />
-          <button className="bg-red-600 px-4 py-2 text-black rounded-r-full">
-            <AiOutlineSearch className="text-2xl" />
-          </button>
+              onChange={(e) => {
+                setSearchText(e.target.value);
+              }}
+            />
+            {showSuggestion && (
+              <div className="absolute  rounded-md w-4/5 top-10 border-t border-red-500 ">
+                <ul>
+                  {suggestion.map((ele, i) => {
+                    return (
+                      <li
+                        className={`py-2 border-b-2 rounded-r-md rounder-l-md px-2 border-red-600 ${
+                          theme
+                            ? "bg-slate-300 text-black"
+                            : "bg-black text-white"
+                        }`}
+                        key={i}
+                      >
+                        {ele}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            )}
+            <button className="bg-red-600 px-4 py-2 text-black rounded-r-full">
+              <AiOutlineSearch className="text-2xl" />
+            </button>
+          </div>
+
           <div className=" hidden md:flex ml-2   justify-center rounded-full bg-transparent hover:bg-lighttextGray  transform cursor-pointer duration-150 transition-all ease-in">
             <MdKeyboardVoice className="text-4xl" />
           </div>
@@ -87,3 +122,16 @@ const Header = () => {
 };
 
 export default Header;
+
+//   if (user) {
+//     // const {
+//     //   user: { refreshToken, providerData },
+//     // } = await signInWithPopup(firebaseAuth, provider);
+//     dispatch(login({ name: "abhishekssss", age: "knkn" }));
+//     // localStorage.setItem("user", JSON.stringify(providerData[0]));
+//     // console.log(typeof providerData[0]);
+//   }
+//   // } else {
+//   //   setIsMenu(!isMenu);
+//   // }
+// };
