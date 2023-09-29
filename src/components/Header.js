@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, Outlet } from "react-router-dom";
 import store from "../redux/store.js";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { login } from "../redux/authslice.js";
@@ -17,6 +18,7 @@ import { SEARCH_SUGGESTION_API } from "../config/constant.js";
 import { cacheREsults } from "../redux/cacheData.js";
 
 import { MdKeyboardVoice, MdDarkMode, MdOutlineDarkMode } from "react-icons/md";
+
 const Header = () => {
   const theme = useSelector((store) => store.themes.apptheme);
   const [searchText, setSearchText] = useState("");
@@ -101,7 +103,6 @@ const Header = () => {
                             ? "bg-slate-300 text-black"
                             : "bg-black text-white"
                         }`}
-                        key={i}
                       >
                         {ele}
                       </li>
@@ -135,6 +136,7 @@ const Header = () => {
           </div>
         </div>
       </div>
+      <Outlet />
     </header>
   );
 };

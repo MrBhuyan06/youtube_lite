@@ -2,6 +2,7 @@ import React from "react";
 import SideBar from "./SideBar.js";
 import { Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import CategoriesList from "./CategoriesList.js";
 
 const BodyContainer = () => {
   const theme = useSelector((store) => store.themes.apptheme);
@@ -12,6 +13,7 @@ const BodyContainer = () => {
       }   `}
     >
       <SideBar className="sticky top-40" />
+      {/* <CategoriesList /> */}
       <Outlet />
     </div>
   );

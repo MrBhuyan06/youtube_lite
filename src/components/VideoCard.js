@@ -21,10 +21,12 @@ const VideoCard = ({ info }) => {
   const [duration, setDuration] = useState(null);
   const [icon, setChannelIcon] = useState(null);
 
+  const _videoId = id?.videoId || id;
+
   //get particulat video details
   useEffect(() => {
     getParticularVideo();
-  }, [id]);
+  }, [_videoId]);
 
   //get The channelIcon
   useEffect(() => {
@@ -37,7 +39,7 @@ const VideoCard = ({ info }) => {
     } = await request("/videos", {
       params: {
         part: "contentDetails,statistics",
-        id: id,
+        id: _videoId,
       },
     });
     console.log();

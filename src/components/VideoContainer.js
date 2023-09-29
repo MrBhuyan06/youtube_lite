@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import VideoCard from "./VideoCard.js";
 import request from "../api.axios.js";
+import { Link } from "react-router-dom";
 
 const VideoContainer = () => {
   const [video, setVideo] = useState([]);
@@ -21,7 +22,7 @@ const VideoContainer = () => {
         maxResults: 50,
       },
     });
-    setVideo(data.items);
+    setVideo(data?.items);
   }
 
   if (video?.length === 0) {
@@ -29,9 +30,13 @@ const VideoContainer = () => {
   }
 
   return (
-    <div className="flex flex-wrap gap-2 mt-2">
+    <div className="flex flex-wrap gap-4 mt-2">
       {video.map((video) => {
-        return <VideoCard key={video.id} info={video} />;
+        return (
+          <Link key={video.id} to={`/watch?v=${video.id}`}>
+            <VideoCard info={video} />
+          </Link>
+        );
       })}
     </div>
   );
