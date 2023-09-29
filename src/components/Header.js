@@ -14,6 +14,7 @@ import {
 import { changeTheme } from "../redux/theme.js";
 import { toggleMenu } from "../redux/appNavigation.js";
 import { SEARCH_SUGGESTION_API } from "../config/constant.js";
+import { cacheREsults } from "../redux/cacheData.js";
 
 import { MdKeyboardVoice, MdDarkMode, MdOutlineDarkMode } from "react-icons/md";
 const Header = () => {
@@ -21,6 +22,8 @@ const Header = () => {
   const [searchText, setSearchText] = useState("");
   const [suggestion, setSuggestion] = useState([]);
   const [showSuggestion, setShowSuggestion] = useState(false);
+  const cache = useSelector((store) => store.cache);
+  console.log(cache);
 
   const dispatch = useDispatch();
 
@@ -33,11 +36,15 @@ const Header = () => {
 
   useEffect(() => {
     //getSearcData
-    const timer = setTimeout(() => {
-      getSearchData();
+    const id = setTimeout(() => {
+      if (cache[searchText]) {
+        setSuggestion(cache[searchText]);
+      } else {
+        getSearchData();
+      }
     }, 1000);
     return () => {
-      clearTimeout(timer);
+      clearTimeout(id);
     };
   }, [searchText]);
 
@@ -45,6 +52,11 @@ const Header = () => {
     console.log("Api Call");
     const stream = await fetch(SEARCH_SUGGESTION_API + searchText);
     const data = await stream.json();
+    dispatch(
+      cacheREsults({
+        [searchText]: [data[1]],
+      })
+    );
     setSuggestion(data[1]);
   }
 
@@ -70,6 +82,12 @@ const Header = () => {
               ${theme ? "bg-slate-300" : "bg-ligthbggray"}`}
               onChange={(e) => {
                 setSearchText(e.target.value);
+              }}
+              onBlur={() => {
+                setShowSuggestion(false);
+              }}
+              onFocus={() => {
+                setShowSuggestion(true);
               }}
             />
             {showSuggestion && (
