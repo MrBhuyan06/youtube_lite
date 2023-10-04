@@ -39,7 +39,7 @@ const Header = () => {
   useEffect(() => {
     //getSearcData
     const id = setTimeout(() => {
-      if (cache[searchText]) {
+      if (cache[searchText]) 
         setSuggestion(cache[searchText]);
       } else {
         getSearchData();
