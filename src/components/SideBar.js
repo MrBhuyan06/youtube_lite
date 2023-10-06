@@ -10,6 +10,7 @@ import {
   MdFavorite,
   MdLiveTv,
 } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const SideBar = () => {
   const theme = useSelector((store) => store.themes.apptheme);
