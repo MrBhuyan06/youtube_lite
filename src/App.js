@@ -8,7 +8,6 @@ import { Router, RouterProvider, createBrowserRouter } from "react-router-dom";
 import BodyContainer from "./components/BodyContainer.js";
 import WatchPage from "./components/WatchPage.js";
 import SearchPage from "./components/SearchPage.js";
-import LoginPage from "./components/LoginPage.js";
 
 const appRouter = createBrowserRouter([
   {
